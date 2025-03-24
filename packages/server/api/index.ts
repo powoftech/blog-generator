@@ -53,8 +53,8 @@ app
         httpOnly: true,
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         sameSite: 'strict',
-        domain:
-          envConfig.nodeEnv === 'production' ? envConfig.clientUrl : undefined,
+        // domain:
+        //   envConfig.nodeEnv === 'production' ? envConfig.clientUrl : undefined,
       },
       rolling: true,
     }),
