@@ -7,14 +7,13 @@ import express from 'express'
 import rateLimit from 'express-rate-limit'
 import session from 'express-session'
 import helmet from 'helmet'
-import Redis from 'ioredis'
+import { Redis } from 'ioredis'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
-import { errorHandler } from './middleware/errorHandler'
-import authRoutes from './routes/auth'
-import blogRoutes from './routes/blog'
-
-import { envConfig } from './utils/envConfig'
+import { errorHandler } from './middleware/errorHandler.js'
+import authRoutes from './routes/auth.js'
+import blogRoutes from './routes/blog.js'
+import { envConfig } from './utils/envConfig.js'
 
 const app = express()
 const port = envConfig.port

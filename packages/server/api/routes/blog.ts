@@ -1,8 +1,8 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { NextFunction, Request, Response, Router } from 'express'
-import { authHandler } from '../middleware/authHandler'
-import Blog from '../models/blog'
-import { envConfig } from '../utils/envConfig'
+import { authHandler } from '../middleware/authHandler.js'
+import Blog from '../models/blog.js'
+import { envConfig } from '../utils/envConfig.js'
 
 const router = Router()
 

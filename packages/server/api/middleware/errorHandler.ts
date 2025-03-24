@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { envConfig } from '../utils/envConfig'
+import { envConfig } from '../utils/envConfig.js'
 
 interface AppError extends Error {
   status?: number
