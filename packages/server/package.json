@@ -4,8 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "tsx watch --clear-screen=false --watch-preserve-output api/index.ts",
-    "build": "tsc --outDir dist",
-    "start": "node dist/index.js"
+    "start": "node api/index.ts"
   },
   "keywords": [],
   "author": "",
