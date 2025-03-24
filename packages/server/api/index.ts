@@ -27,6 +27,8 @@ const redisStore = new RedisStore({
   client: redis,
 })
 
+app.set('trust proxy', 1)
+
 app
   .disable('x-powered-by')
   .use(helmet()) // Adds various HTTP headers for security
