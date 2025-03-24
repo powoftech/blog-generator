@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "dev": "tsx watch --clear-screen=false --watch-preserve-output src/index.ts",
+    "dev": "tsx watch --clear-screen=false --watch-preserve-output api/index.ts",
     "start": "node api/index.ts"
   },
   "keywords": [],

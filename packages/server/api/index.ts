@@ -6,7 +6,6 @@ import 'dotenv/config'
 import express from 'express'
 import rateLimit from 'express-rate-limit'
 import session from 'express-session'
-import * as expressPackage from 'express/package.json' assert { type: 'json' }
 import helmet from 'helmet'
 import Redis from 'ioredis'
 import mongoose from 'mongoose'
@@ -78,8 +77,10 @@ app.use('/blogs', blogRoutes)
 app.use(errorHandler)
 
 app.listen(port, () => {
+  const expressVersion = '5.01'
+
   console.log(
-    `  \x1b[1m\x1b[38;2;252;206;129m📦 Express ${expressPackage.version}\x1b[0m
+    `  \x1b[1m\x1b[38;2;252;206;129m📦 Express ${expressVersion}\x1b[0m
    - Local:        http://localhost:${port}`,
   )
 })
