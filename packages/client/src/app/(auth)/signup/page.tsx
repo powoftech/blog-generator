@@ -1,5 +1,6 @@
 'use client'
 
+import Logo from '@/app/_assets/logo.svg'
 import { cn } from '@/lib/utils'
 import {
   Button,
@@ -11,6 +12,7 @@ import {
   Legend,
 } from '@headlessui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { Toaster, toast } from 'sonner'
@@ -52,8 +54,12 @@ export default function SignUpPage() {
     })
 
     if (!response.ok) {
-      // const error = await response.json()
-      toast.error('Error creating user')
+      const error = await response.json()
+      if (!response.status.toString().startsWith('5')) {
+        toast.error(`${error.error}`)
+      } else {
+        toast.error('Server error. Please try again later.')
+      }
       return
     }
 
@@ -61,6 +67,12 @@ export default function SignUpPage() {
     // toast.success('User created successfully')
 
     // Redirect to sign in page
+
+    toast.success('Successfully signed up. Redirecting...')
+
+    // Sleep for 1 second before redirecting
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
     router.push('/signin')
   }
 
@@ -71,6 +83,11 @@ export default function SignUpPage() {
       <div className="w-full max-w-lg px-4">
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Fieldset className="space-y-6 rounded-xl bg-white/5 p-6 sm:p-10">
+            <div className="mx-auto flex w-full items-center justify-center py-3 text-center">
+              <Link href={'/'}>
+                <Logo className="fill-foreground h-6 w-fit" />
+              </Link>
+            </div>
             <Legend className="text-base/7 font-semibold text-white">
               Sign up
             </Legend>
@@ -132,10 +149,19 @@ export default function SignUpPage() {
             <div className="flex w-full items-center justify-start">
               <Button
                 type="submit"
-                className="inline-flex items-center gap-2 rounded-md bg-[#404040] px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[hover]:bg-[#525252] data-[open]:bg-gray-700"
+                className="inline-flex cursor-pointer items-center gap-2 rounded-md bg-[#404040] px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[hover]:bg-[#525252] data-[open]:bg-gray-700"
               >
                 Submit
               </Button>
+            </div>
+            <div className="text-sm/6 text-white/80">
+              <span>Already have an account?</span>{' '}
+              <Link
+                href={'/signin'}
+                className="inline-flex font-semibold text-white underline underline-offset-2"
+              >
+                Sign in here.
+              </Link>
             </div>
           </Fieldset>
         </form>

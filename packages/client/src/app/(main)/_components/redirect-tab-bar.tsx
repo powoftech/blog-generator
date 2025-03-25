@@ -16,7 +16,7 @@ export default function RedirectTabBar() {
             'rounded-full px-3 py-1 text-sm/6 font-semibold select-none',
             pathname === '/'
               ? 'bg-foreground/10 text-foreground'
-              : 'text-foreground/50 hover:bg-foreground/5 hover:text-foreground/75',
+              : 'text-foreground/50 hover:bg-foreground/5 hover:text-foreground/75 transition-colors duration-200 ease-in-out',
           )}
         >
           Blog
@@ -27,7 +27,7 @@ export default function RedirectTabBar() {
             'rounded-full px-3 py-1 text-sm/6 font-semibold select-none',
             pathname === '/search'
               ? 'bg-foreground/10 text-foreground'
-              : 'text-foreground/50 hover:bg-foreground/5 hover:text-foreground/75',
+              : 'text-foreground/50 hover:bg-foreground/5 hover:text-foreground/75 transition-colors duration-200 ease-in-out',
           )}
         >
           Search
@@ -38,7 +38,7 @@ export default function RedirectTabBar() {
             'rounded-full px-3 py-1 text-sm/6 font-semibold select-none',
             pathname === '/generate'
               ? 'bg-foreground/10 text-foreground'
-              : 'text-foreground/50 hover:bg-foreground/5 hover:text-foreground/75',
+              : 'text-foreground/50 hover:bg-foreground/5 hover:text-foreground/75 transition-colors duration-200 ease-in-out',
           )}
         >
           Generate

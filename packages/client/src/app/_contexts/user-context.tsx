@@ -34,10 +34,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
       setLoading(true)
       const response = await fetch('/api/auth', {
         method: 'GET',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
       })
 
       if (!response.ok) {
@@ -60,6 +60,9 @@ export function UserProvider({ children }: { children: ReactNode }) {
       await fetch('/api/auth/signout', {
         method: 'POST',
         credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
       setUser(null)
     } catch (err) {

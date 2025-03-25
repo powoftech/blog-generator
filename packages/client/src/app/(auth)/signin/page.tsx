@@ -1,5 +1,6 @@
 'use client'
 
+import Logo from '@/app/_assets/logo.svg'
 import { useUser } from '@/app/_contexts/user-context'
 import { cn } from '@/lib/utils'
 import {
@@ -12,16 +13,15 @@ import {
   Legend,
 } from '@headlessui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast, Toaster } from 'sonner'
 import * as z from 'zod'
 
 const schema = z.object({
-  email: z.string().email(),
-  password: z
-    .string()
-    .min(8, { message: 'Password must be at least 8 characters long' }),
+  email: z.string().email('Email is required'),
+  password: z.string().nonempty('Password is required'),
 })
 
 type Schema = z.infer<typeof schema>
@@ -48,12 +48,21 @@ export default function SignInPage() {
     })
 
     if (!response.ok) {
-      // const error = await response.json()
-      toast.error('Error signing in')
+      const error = await response.json()
+      if (!response.status.toString().startsWith('5')) {
+        toast.error(`${error.error}`)
+      } else {
+        toast.error('Server error. Please try again later.')
+      }
       return
     }
 
     fetchUser()
+
+    toast.success('Successfully signed in. Redirecting...')
+
+    // Sleep for 1 second before redirecting
+    await new Promise((resolve) => setTimeout(resolve, 1000))
 
     router.push('/')
   }
@@ -65,6 +74,11 @@ export default function SignInPage() {
       <div className="w-full max-w-lg px-4">
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Fieldset className="space-y-6 rounded-xl bg-white/5 p-6 sm:p-10">
+            <div className="mx-auto flex w-full items-center justify-center py-3 text-center">
+              <Link href={'/'}>
+                <Logo className="fill-foreground h-6 w-fit" />
+              </Link>
+            </div>
             <Legend className="text-base/7 font-semibold text-white">
               Sign in
             </Legend>
@@ -107,10 +121,19 @@ export default function SignInPage() {
             <div className="flex w-full items-center justify-start">
               <Button
                 type="submit"
-                className="inline-flex items-center gap-2 rounded-md bg-[#404040] px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[hover]:bg-[#525252] data-[open]:bg-gray-700"
+                className="inline-flex cursor-pointer items-center gap-2 rounded-md bg-[#404040] px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[hover]:bg-[#525252] data-[open]:bg-gray-700"
               >
                 Submit
               </Button>
+            </div>
+            <div className="text-sm/6 text-white/80">
+              <span>Don&apos;t have an account?</span>{' '}
+              <Link
+                href={'/signup'}
+                className="inline-flex font-semibold text-white underline underline-offset-2"
+              >
+                Sign up for TractAI
+              </Link>
             </div>
           </Fieldset>
         </form>
