@@ -1,7 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { Request, Response, Router } from 'express'
-import mime from 'mime-types'
-import fs from 'node:fs'
 import { authHandler } from '../middleware/authHandler.js'
 import Blog from '../models/blog.js'
 import { envConfig } from '../utils/envConfig.js'
@@ -38,7 +36,7 @@ router.post('/generate', authHandler, async (req: Request, res: Response) => {
       
               Your responses must be a JSON object has the following schema:
               * title: Title of the blog post
-              * content: Content of the blog post in markdown format
+              * content: Content of the blog post in markdown format. The content should not contain title.
       `)
 
     // if (!result.response) {
@@ -135,21 +133,39 @@ router.post(
   },
 )
 
-// Get all blogs for the user
-router.get(
-  '/',
-  authHandler,
-  async (req: Request & { userId?: string }, res: Response) => {
-    try {
-      const blogs = await Blog.find({ author: req.userId })
-      res.json(blogs)
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error'
-      res.status(500).json({ error: 'Error fetching blogs: ' + errorMessage })
+router.get('/:blogId', async (req: Request, res: Response) => {
+  const blogId = req.params.blogId
+  try {
+    console.log(blogId)
+    const blog = await Blog.findById(blogId).populate('author', 'email')
+    if (!blog) {
+      console.log('Blog not found')
+      res.status(404).json({ error: 'Blog not found' })
+      return
     }
-  },
-)
+    res.status(200).json({ blog: blog })
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error'
+    res.status(500).json({ error: 'Error fetching blog: ' + errorMessage })
+  }
+})
+
+// Get all blogs for the user
+router.get('/', async (req: Request, res: Response) => {
+  try {
+    const blogs = await Blog.find()
+      .populate('author', 'email')
+      .sort({ createdAt: -1 })
+    res.status(200).json({ blogs: blogs })
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error'
+    res.status(500).json({ error: 'Error fetching blogs: ' + errorMessage })
+  }
+})
+
+// Get a single blog by ID
 
 // Additional CRUD endpoints (e.g., update, delete) can be added here.
 

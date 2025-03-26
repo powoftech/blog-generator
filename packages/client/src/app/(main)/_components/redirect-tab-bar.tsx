@@ -14,7 +14,7 @@ export default function RedirectTabBar() {
           href={'/'}
           className={cn(
             'rounded-full px-3 py-1 text-sm/6 font-semibold select-none',
-            pathname === '/'
+            pathname === '/' || pathname.startsWith('/blog')
               ? 'bg-foreground/10 text-foreground'
               : 'text-foreground/50 hover:bg-foreground/5 hover:text-foreground/75 transition-colors duration-200 ease-in-out',
           )}

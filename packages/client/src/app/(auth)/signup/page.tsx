@@ -83,9 +83,9 @@ export default function SignUpPage() {
       <div className="w-full max-w-lg px-4">
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Fieldset className="space-y-6 rounded-xl bg-white/5 p-6 sm:p-10">
-            <div className="mx-auto flex w-full items-center justify-center py-3 text-center">
+            <div className="mx-auto flex h-6 w-28 items-center justify-center py-3 text-center">
               <Link href={'/'}>
-                <Logo className="fill-foreground h-6 w-fit" />
+                <Logo className="fill-foreground h-6 w-28" />
               </Link>
             </div>
             <Legend className="text-base/7 font-semibold text-white">

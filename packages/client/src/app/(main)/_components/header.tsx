@@ -25,10 +25,13 @@ export default function Header({ className }: { className?: string }) {
   return (
     <>
       <header className={cn('relative px-4 sm:px-6', className)}>
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-2 py-4">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-2 py-4 md:py-6">
           <div className="flex items-center">
-            <Link href={'/'} className="flex h-8 items-center">
-              <Logo className="fill-foreground h-6 w-28" />
+            <Link
+              href={'/'}
+              className="flex h-8 w-28 items-center justify-start"
+            >
+              <Logo className="fill-foreground h-6 w-fit" />
             </Link>
           </div>
 
@@ -38,20 +41,17 @@ export default function Header({ className }: { className?: string }) {
                 {!user ? (
                   <div className="flex gap-4 font-medium">
                     <Link
-                      href={'signin'}
-                      className="active:bg-foreground/20 hover:bg-foreground/10 flex items-center gap-0.5 rounded-2xl bg-transparent px-4 py-1 backdrop-blur-sm transition-colors duration-200 ease-in-out select-none"
+                      href={'/signin'}
+                      className="active:bg-foreground/20 hover:bg-foreground/10 flex items-center gap-0.5 rounded-full bg-transparent px-3 py-1 backdrop-blur-sm transition-colors duration-200 ease-in-out select-none"
                     >
                       Sign in
                     </Link>
                     <Link
-                      href={'signup'}
-                      className="bg-foreground hover:bg-foreground/85 active:bg-foreground/70 flex items-center gap-0.5 rounded-2xl px-4 py-1 text-black backdrop-blur-sm transition-colors duration-200 ease-in-out select-none"
+                      href={'/signup'}
+                      className="bg-foreground hover:bg-foreground/85 active:bg-foreground/70 flex items-center gap-0.5 rounded-full px-3 py-1 text-black backdrop-blur-sm transition-colors duration-200 ease-in-out select-none"
                     >
                       Sign up
                     </Link>
-                    {/* <Link href={'/signin'} className="inline-flex rounded-full">
-                  <UserIcon className="size-6" />
-                </Link> */}
                   </div>
                 ) : (
                   <Menu>
@@ -62,7 +62,7 @@ export default function Header({ className }: { className?: string }) {
                     <MenuItems
                       transition
                       anchor="bottom end"
-                      className="border-foreground/5 bg-foreground/5 text-foreground w-fit origin-top-right rounded-xl border p-1 text-sm/6 transition duration-100 ease-out [--anchor-gap:var(--spacing-2)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 backdrop-blur-md"
+                      className="border-foreground/5 bg-foreground/5 text-foreground w-fit origin-top-right rounded-xl border p-1 text-sm/6 backdrop-blur-md transition duration-100 ease-out [--anchor-gap:var(--spacing-2)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
                     >
                       <>
                         <MenuItem>
