@@ -58,8 +58,8 @@ export default function GeneratePage() {
 
       const result = await response.json()
 
-      setTitle(result.title)
-      setContent(result.content)
+      setTitle(result.title || '')
+      setContent(result.content || '')
     } catch (error) {
       console.error(error)
       toast.error('Server error. Please try again later.')

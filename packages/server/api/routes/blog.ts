@@ -8,7 +8,7 @@ const router = Router()
 
 const genAI = new GoogleGenerativeAI(envConfig.geminiApiKey)
 const model = genAI.getGenerativeModel({
-  model: 'gemini-2.0-flash',
+  model: 'gemini-2.0-flash-lite',
 })
 
 const generationConfig = {

@@ -68,7 +68,7 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center">
+    <div className="flex h-dvh w-full flex-col items-center justify-center">
       <Toaster />
       <div className="absolute -z-10 block size-64 rounded-full bg-white/15 blur-2xl"></div>
       <div className="w-full max-w-lg px-4">
@@ -76,7 +76,7 @@ export default function SignInPage() {
           <Fieldset className="space-y-6 rounded-xl bg-white/5 p-6 sm:p-10">
             <div className="mx-auto flex h-6 w-28 items-center justify-center py-3 text-center">
               <Link href={'/'}>
-                <Logo className="fill-foreground h-6 w-fit" />
+                <Logo className="fill-foreground h-6 w-28" />
               </Link>
             </div>
             <Legend className="text-base/7 font-semibold text-white">

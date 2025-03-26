@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "concurrently -n \"Client,Server\" -c \"#ac7ea7,#fcce81\" \"npm run dev --workspace=packages/client\" \"npm run dev --workspace=packages/server\"",
     "build": "concurrently -n \"Client,Server\" -c \"#ac7ea7,#fcce81\" \"npm run build --workspace=packages/client\" \"npm run build --workspace=packages/server\"",
-    "start": "concurrently -n \"Client,Server\" -c \"#ac7ea7,#fcce81\" \"npm run start --workspace=packages/client\" \"npm run start --workspace=packages/server\""
+    "start": "concurrently -n \"Client,Server\" -c \"#ac7ea7,#fcce81\" \"npm run start --workspace=packages/client\" \"npm run start --workspace=packages/server\"",
+    "format": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
   },
   "devDependencies": {
     "@types/node": "^22.13.13",
