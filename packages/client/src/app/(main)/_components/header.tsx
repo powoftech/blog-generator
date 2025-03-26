@@ -28,7 +28,7 @@ export default function Header({ className }: { className?: string }) {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-2 py-4">
           <div className="flex items-center">
             <Link href={'/'} className="flex h-8 items-center">
-              <Logo className="fill-foreground h-6 w-fit" />
+              <Logo className="fill-foreground h-6 w-28" />
             </Link>
           </div>
 
@@ -62,7 +62,7 @@ export default function Header({ className }: { className?: string }) {
                     <MenuItems
                       transition
                       anchor="bottom end"
-                      className="border-foreground/5 bg-foreground/5 text-foreground w-fit origin-top-right rounded-xl border p-1 text-sm/6 transition duration-100 ease-out [--anchor-gap:var(--spacing-2)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
+                      className="border-foreground/5 bg-foreground/5 text-foreground w-fit origin-top-right rounded-xl border p-1 text-sm/6 transition duration-100 ease-out [--anchor-gap:var(--spacing-2)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 backdrop-blur-md"
                     >
                       <>
                         <MenuItem>
