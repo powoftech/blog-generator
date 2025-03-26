@@ -1,3 +1,4 @@
+import { TZDate } from '@date-fns/tz'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import Markdown from 'react-markdown'
@@ -65,16 +66,17 @@ export default async function BlogItemPage({
       <div className="mx-auto max-w-7xl px-2 pb-8">
         <h2 className="text-3xl font-extrabold md:text-4xl">{blog.title}</h2>
         <div className="text-foreground/60 mt-4 line-clamp-2 flex items-center gap-x-2 text-sm md:text-base">
-          <span>{blog.author.email}</span>
+          <span>{blog.author.email.split('@')[0]}</span>
           <span>•</span>
-          <span title={blog.createdAt}>
-            {new Date(blog.createdAt).toLocaleDateString('en-US', {
+          <span title={new TZDate(blog.createdAt).toString()}>
+            {new TZDate(blog.createdAt).toLocaleString('en-US', {
               year: 'numeric',
               month: 'long',
               day: 'numeric',
               minute: '2-digit',
               hour: '2-digit',
               hour12: true,
+              timeZoneName: 'short',
             })}
           </span>
         </div>

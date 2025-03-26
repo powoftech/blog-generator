@@ -68,7 +68,7 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="flex h-dvh w-full flex-col items-center justify-center">
+    <div className="flex min-h-svh w-full flex-col items-center justify-center">
       <Toaster />
       <div className="absolute -z-10 block size-64 rounded-full bg-white/15 blur-2xl"></div>
       <div className="w-full max-w-lg px-4">
