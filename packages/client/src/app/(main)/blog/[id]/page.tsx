@@ -37,7 +37,7 @@ export default async function BlogItemPage({
   if (!response.ok) {
     return (
       <div className="relative">
-        <div className="mx-auto max-w-7xl px-2 pb-8">
+        <div className="mx-auto max-w-7xl px-2">
           <div className="flex w-full flex-col items-center justify-center text-center">
             <div className="font-semibold">
               Sorry, this blog isn&apos;t available
@@ -63,7 +63,7 @@ export default async function BlogItemPage({
 
   return (
     <div className="relative">
-      <div className="mx-auto max-w-7xl px-2 pb-8">
+      <div className="mx-auto max-w-7xl px-2">
         <h2 className="text-3xl font-extrabold md:text-4xl">{blog.title}</h2>
         <div className="text-foreground/60 mt-4 line-clamp-2 flex items-center gap-x-2 text-sm md:text-base">
           <span>{blog.author.email.split('@')[0]}</span>

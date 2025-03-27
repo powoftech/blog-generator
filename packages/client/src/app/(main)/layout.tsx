@@ -11,7 +11,7 @@ export default function MainLayout({
       <div>
         <div className="relative">
           <Header />
-          <main className="bg-background/80 min-h-[calc(100dvh-4rem-3.5rem)] rounded-2xl px-4 pb-8 sm:px-6 md:min-h-[calc(100dvh-5rem-4.5rem)]">
+          <main className="bg-background/80 min-h-[calc(100dvh-4rem-3.5rem)] rounded-2xl px-4 pb-16 sm:px-6 md:min-h-[calc(100dvh-5rem-4.5rem)]">
             <div className="mx-auto max-w-7xl px-2">
               <RedirectTabBar />
             </div>

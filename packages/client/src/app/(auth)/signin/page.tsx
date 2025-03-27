@@ -12,6 +12,7 @@ import {
   Label,
   Legend,
 } from '@headlessui/react'
+import { ArrowRightEndOnRectangleIcon } from '@heroicons/react/24/solid'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -123,7 +124,7 @@ export default function SignInPage() {
                 type="submit"
                 className="inline-flex cursor-pointer items-center gap-2 rounded-md bg-[#404040] px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[hover]:bg-[#525252] data-[open]:bg-gray-700"
               >
-                Submit
+                Continue <ArrowRightEndOnRectangleIcon className="size-4" />
               </Button>
             </div>
             <div className="text-sm/6 text-white/80">

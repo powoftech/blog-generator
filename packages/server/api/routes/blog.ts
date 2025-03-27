@@ -8,7 +8,7 @@ const router = Router()
 
 const genAI = new GoogleGenerativeAI(envConfig.geminiApiKey)
 const model = genAI.getGenerativeModel({
-  model: 'gemini-2.0-flash-lite',
+  model: 'gemini-2.0-flash',
 })
 
 const generationConfig = {
@@ -92,6 +92,11 @@ router.post('/generate', authHandler, async (req: Request, res: Response) => {
         `Blocked for ${result.response.promptFeedback.blockReason}`,
       )
     }
+
+    if (!result.response.text()) {
+      throw new Error('Exceeded quota or no response received')
+    }
+
     const cleanJson = JSON.parse(result.response.text())
     const title = cleanJson.title
     const content = cleanJson.content
@@ -118,8 +123,8 @@ router.post(
 
       const blog = await Blog.create({
         author: req.userId,
-        title: title,
-        content: content,
+        title: title.trim(),
+        content: content.trim(),
       })
       if (!blog) {
         throw new Error()
@@ -133,6 +138,113 @@ router.post(
   },
 )
 
+// Get all blogs for the user
+router.get('/', async (req: Request, res: Response) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1
+    const limit = parseInt(req.query.limit as string) || 10
+
+    if (page < 1) {
+      res.status(400).json({ error: 'Invalid page number' })
+      return
+    }
+
+    if (limit < 1) {
+      res.status(400).json({ error: 'Invalid limit number' })
+      return
+    }
+
+    const skip = (page - 1) * limit
+
+    const totalBlogs = await Blog.countDocuments()
+    const blogs = await Blog.find()
+      .populate('author', 'email')
+      .sort({ createdAt: 'desc' })
+      .skip(skip)
+      .limit(limit)
+
+    res.status(200).json({
+      blogs,
+      pagination: {
+        total: totalBlogs,
+        page,
+        limit,
+        pages: Math.ceil(totalBlogs / limit),
+      },
+    })
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error'
+    res.status(500).json({ error: 'Error fetching blogs: ' + errorMessage })
+  }
+})
+
+// Get blogs by search query
+router.get('/search', async (req: Request, res: Response) => {
+  try {
+    const query = req.query.query as string
+    const page = parseInt(req.query.page as string) || 1
+    const limit = parseInt(req.query.limit as string) || 10
+    const order = (req.query.order as string) || 'desc'
+    const author = req.query.author as string
+
+    if (!query) {
+      res.status(400).json({ error: 'Query parameter is required' })
+      return
+    }
+
+    if (page < 1) {
+      res.status(400).json({ error: 'Invalid page number' })
+      return
+    }
+
+    if (limit < 1) {
+      res.status(400).json({ error: 'Invalid limit number' })
+      return
+    }
+
+    const skip = (page - 1) * limit
+
+    // Build the search query
+    const searchCriteria: any = {
+      $or: [
+        { title: { $regex: query, $options: 'i' } },
+        { content: { $regex: query, $options: 'i' } },
+      ],
+    }
+
+    // Add author filter if provided
+    if (author) {
+      searchCriteria.author = author
+    }
+
+    // Count total matching documents
+    const totalBlogs = await Blog.countDocuments(searchCriteria)
+
+    // Get search results with pagination and sorting
+    const blogs = await Blog.find(searchCriteria)
+      .populate('author', 'email')
+      .sort({ createdAt: order === 'desc' ? 'desc' : 'asc' })
+      .skip(skip)
+      .limit(limit)
+
+    res.status(200).json({
+      blogs,
+      pagination: {
+        total: totalBlogs,
+        page,
+        limit,
+        pages: Math.ceil(totalBlogs / limit),
+      },
+    })
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error'
+    res.status(500).json({ error: 'Error fetching blogs: ' + errorMessage })
+  }
+})
+
+// Get a single blog by ID
 router.get('/:blogId', async (req: Request, res: Response) => {
   const blogId = req.params.blogId
   try {
@@ -150,23 +262,5 @@ router.get('/:blogId', async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Error fetching blog: ' + errorMessage })
   }
 })
-
-// Get all blogs for the user
-router.get('/', async (req: Request, res: Response) => {
-  try {
-    const blogs = await Blog.find()
-      .populate('author', 'email')
-      .sort({ createdAt: -1 })
-    res.status(200).json({ blogs: blogs })
-  } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : 'Unknown error'
-    res.status(500).json({ error: 'Error fetching blogs: ' + errorMessage })
-  }
-})
-
-// Get a single blog by ID
-
-// Additional CRUD endpoints (e.g., update, delete) can be added here.
 
 export default router
