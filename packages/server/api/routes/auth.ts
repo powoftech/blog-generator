@@ -6,6 +6,7 @@ const router = Router()
 
 router.get('/', async (req: Request, res: Response) => {
   try {
+    console.log(req.session.userId)
     const user = await User.findById(req.session.userId)
       .select('_id email')
       .exec()
